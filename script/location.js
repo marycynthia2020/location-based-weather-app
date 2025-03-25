@@ -18,10 +18,13 @@ if (navigator.geolocation) {
     },
     error => {
       alert("Error getting geolocation" + error.message);
+      document.getElementsByTagName(body)[0].textContent = "Refresh and try again"
+ 
     }
   );
 } else {
-  alert("geolation is not supported by the browser");
+  alert("geolation is not supported by the browser, please enable geolocation");
+  document.getElementsByTagName(body)[0].textContent = "Enable geolocation and try again"
 }
 
 async function getWeather() {
@@ -31,10 +34,11 @@ async function getWeather() {
       `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
     );
     data = await response.json();
+    console.log(data)
 
     container.style.display = "block";
     temp.textContent = Math.round(data.main.temp) + "°C";
-    country.textContent = data.name;
+    country.textContent = data.weather[0].description;
     humidity.textContent = data.main.humidity + "%";
     windSpeed.textContent = data.wind.speed + "km/hr";
     document.getElementsByTagName("h1")[0].textContent += `Your Location is ${data.name}` 
