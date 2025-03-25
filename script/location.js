@@ -3,7 +3,8 @@ const country = document.getElementById("country");
 const humidity = document.getElementById("humidity");
 const windSpeed = document.getElementById("wind-speed");
 const container = document.querySelector(".container");
-let imageHolder = document.querySelector(".image-holder");
+const imageHolder = document.querySelector(".image-holder");
+const loading = document.querySelector(".loading")
 
 let lat;
 let lon;
@@ -17,13 +18,15 @@ if (navigator.geolocation) {
       getWeather();
     },
     error => {
-      alert(error.message + ". Please enable geolocation and try again");
+      alert(error.message + ". Please enable geolocation and try again")
+      document.getElementsByTagName("body")[0].innerHTML = ` <p class="">Enable your location and try again</p>`
       
  
     }
   );
 } else {
-  alert("geolation is not supported by the browser. Please use a supported browser");
+  alert("geolation is not supported by the browser")
+  document.getElementsByTagName("body")[0].innerHTML = ` <p class="">Use a browser that supports geolocation</p>`
   
 } 
 
@@ -34,15 +37,17 @@ async function getWeather() {
       `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
     );
     data = await response.json();
-    console.log(data)
   
-    
     container.style.display = "block";
+    console.log(loading)
+    loading.innerHTML =""
     temp.textContent = `Temp: ${Math.round(data.main.temp)}°C`;
     country.textContent = data.weather[0].description;
     humidity.textContent = data.main.humidity + "%";
     windSpeed.textContent = data.wind.speed + "km/hr";
     document.getElementsByTagName("h1")[0].textContent += `Your Location is ${data.name}` 
+  } else{
+    document.getElementsByTagName("body")[0].innerHTML = ` <p class="">Failed to get location</p>`
   }
 
   if (data.weather[0].main === "Clouds") {
