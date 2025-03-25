@@ -3,7 +3,7 @@ const country = document.getElementById("country");
 const humidity = document.getElementById("humidity");
 const windSpeed = document.getElementById("wind-speed");
 const container = document.querySelector(".container");
-const imageHolder = document.querySelector(".image-holder");
+let imageHolder = document.querySelector(".image-holder");
 
 let lat;
 let lon;
@@ -34,6 +34,7 @@ async function getWeather() {
       `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
     );
     data = await response.json();
+    console.log(data)
   
     
     container.style.display = "block";
@@ -47,7 +48,7 @@ async function getWeather() {
   if (data.weather[0].main === "Clouds") {
     imageHolder.innerHTML = `<img src= "/images/yellowcloud-removebg-preview.png" width="200" height="200" />`;
   } else if (data.weather[0].main === "Clear") {
-    imageHolder =  `<img src= "/images/smily-removebg-preview.png" width="200" height="200" />`;
+    imageHolder.innerHTML =  `<img src= "/images/smily-removebg-preview.png" width="200" height="200" />`;
   } else if (data.weather[0].main === "Rain") {
     imageHolder.innerHTML =   `<img src= "/images/rainy-removebg-preview.png" width="200" height="200" />`;
   } else if (data.weather[0].main === "Mist") {
