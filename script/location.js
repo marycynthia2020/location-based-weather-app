@@ -1,44 +1,56 @@
-// if (navigator.geolocation) {
-//     navigator.geolocation.getCurrentPosition(
-//       function(position) {
-//         const latitude = position.coords.latitude;
-//         const longitude = position.coords.longitude;
-//         console.log("Latitude: " + latitude + ", Longitude: " + longitude);
-//       },
-//       function(error) {
-//         console.log("Error getting location: " + error.message);
-//       }
-//     );
-//   } else {
-//     console.log("Geolocation is not supported by this browser.");
-//   }
+const temp = document.getElementById("temp");
+const country = document.getElementById("country");
+const humidity = document.getElementById("humidity");
+const windSpeed = document.getElementById("wind-speed");
+const container = document.querySelector(".container");
+const imageHolder = document.querySelector(".image-holder");
 
-// function getPosition(position) {
-//   let lat = position.coords.latitude;
-//   let lon = position.coords.longitude;
-
-// }
 let lat;
 let lon;
 const apiKey = "e5931b767b8f27e94d39355ece5c2a2f";
 
 if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(position => {
-    lat = position.coords.latitude;
-    lon = position.coords.longitude;
-    getWeather()
-  }, error =>{
-    alert('Error getting geolocation' + error.message)
-  }
-);
-} else{
-    alert("geolation is not supported by the browser")
+  navigator.geolocation.getCurrentPosition(
+    position => {
+      lat = position.coords.latitude;
+      lon = position.coords.longitude;
+      getWeather();
+    },
+    error => {
+      alert("Error getting geolocation" + error.message);
+    }
+  );
+} else {
+  alert("geolation is not supported by the browser");
 }
 
 async function getWeather() {
-    if(lat && lon) {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`);
-        const data = await response.json();
-        console.log(data)
-    }
+  let data;
+  if (lat && lon) {
+    const response = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
+    );
+    data = await response.json();
+
+    container.style.display = "block";
+    temp.textContent = Math.round(data.main.temp) + "°C";
+    country.textContent = data.name;
+    humidity.textContent = data.main.humidity + "%";
+    windSpeed.textContent = data.wind.speed + "km/hr";
+    document.getElementsByTagName("h1")[0].textContent += `Your Location is ${data.name}` 
+  }
+
+
+  if (data.weather[0].main === "Clouds") {
+    imageHolder.innerHTML = `<img src= "/images/yellowcloud-removebg-preview.png" width="200" height="200" />`;
+  } else if (data.weather[0].main === "Clear") {
+    imageHolder =  `<img src= "/images/smily-removebg-preview.png" width="200" height="200" />`;
+  } else if (data.weather[0].main === "Rain") {
+    imageHolder.innerHTML =   `<img src= "/images/rainy-removebg-preview.png" width="200" height="200" />`;
+  } else if (data.weather[0].main === "Mist") {
+    imageHolder.innerHTML =  `<img src= "/images/mist-removebg-preview.png" width="200" height="200" />`;
+  } else {
+    imageHolder.innerHTML =  `<img src= "/images/yellowcloud-removebg-preview.png" width="200" height="200" />`;
+  }
+
 }
