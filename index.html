@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./dist/style.css">
+    <title>Weather Forecasts</title>
+</head>
+<body class="w-screen h-screen grid place-items-center">
+   <div class=" background p-4 sm:p-8 sm:py-10 w-full h-full  md:w-1/2 lg:w-[40%] 2xl:w-[25%] md:h-[70vh] rounded-lg flex flex-col justify-between" >
+    <div class="mx-auto image-holder">
+      
+    </div>
+    <div class="text-4xl text-white font-semibold flex flex-col justify-between gap-2 items-center ">
+        <h1 id="temp"></h1>
+        <h2 class="font-medium text-3xl" id="country"></h2>
+    </div>
+    <div class="flex justify-between items-center text-white font-bold">
+
+        <div class=" text-xl md:text-3xl">
+            <p id="humidity"></p>
+            <p class="text-xl hidden">Humidity</p>
+        </div>
+        <div class="text-xl md:text-3xl">
+            <p id="wind-speed"></p>
+            <p class="text-xl hidden">Wind Speed</p>
+        </div>
+    </div>
+    
+   </div>
+   <script src="script/location.js"></script>
+</body>
+</html>
