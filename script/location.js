@@ -37,7 +37,7 @@ async function getWeather() {
     console.log(data)
 
     container.style.display = "block";
-    temp.textContent = Math.round(data.main.temp) + "°C";
+    temp.textContent = `Temp: ${Math.round(data.main.temp)}°C`;
     country.textContent = data.weather[0].description;
     humidity.textContent = data.main.humidity + "%";
     windSpeed.textContent = data.wind.speed + "km/hr";
