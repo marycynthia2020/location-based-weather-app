@@ -35,7 +35,7 @@ async function getWeather() {
     );
     data = await response.json();
   
-    document.getElementById("erro").style.display = "hidden"
+    document.getElementById("error").style.display = "hidden"
     container.style.display = "block";
     temp.textContent = `Temp: ${Math.round(data.main.temp)}°C`;
     country.textContent = data.weather[0].description;
