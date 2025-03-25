@@ -17,13 +17,13 @@ if (navigator.geolocation) {
       getWeather();
     },
     error => {
-      alert("Error getting geolocation. " + error.message);
+      alert(error.message + ". Please enable geolocation and try again");
       
  
     }
   );
 } else {
-  alert("geolation is not supported by the browser");
+  alert("geolation is not supported by the browser. Please use a supported browser");
   
 } 
 
@@ -35,7 +35,7 @@ async function getWeather() {
     );
     data = await response.json();
   
-    document.getElementById("error").style.display = "hidden"
+    
     container.style.display = "block";
     temp.textContent = `Temp: ${Math.round(data.main.temp)}°C`;
     country.textContent = data.weather[0].description;
@@ -43,7 +43,6 @@ async function getWeather() {
     windSpeed.textContent = data.wind.speed + "km/hr";
     document.getElementsByTagName("h1")[0].textContent += `Your Location is ${data.name}` 
   }
-
 
   if (data.weather[0].main === "Clouds") {
     imageHolder.innerHTML = `<img src= "/images/yellowcloud-removebg-preview.png" width="200" height="200" />`;
